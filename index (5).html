@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="theme-color" content="#07161d" />
+<title>Smart Cane — Live Monitor</title>
+<style>
+:root{--bg:#06131a;--panel:#0c2029;--panel2:#102833;--line:#1b3b46;--text:#e7f2f3;--muted:#89a5ad;--teal:#63ead8;--teal2:#37cdbb;--green:#70e1a0;--yellow:#ffca68;--red:#ff767e;--shadow:0 18px 55px #0004}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 70% -20%,#123542 0,transparent 43%),var(--bg);color:var(--text);font:15px/1.5 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;min-height:100vh}
+button,input{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible{outline:2px solid var(--teal);outline-offset:3px}.wrap{width:min(1220px,calc(100% - 36px));margin:auto}.top{height:76px;border-bottom:1px solid #17333e;display:flex;align-items:center;justify-content:space-between;gap:18px}.brand{display:flex;gap:12px;align-items:center}.brandmark{width:42px;height:42px;border:1px solid #2f7779;border-radius:13px;background:#10343b;display:grid;place-items:center;color:var(--teal)}.brandmark svg{width:24px;height:24px}.brandname{font-weight:800;letter-spacing:.11em;font-size:13px}.brandname span{color:var(--teal)}.subbrand{font-size:11px;color:var(--muted);margin-top:2px;letter-spacing:.08em}.topright{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end}.pill{border:1px solid var(--line);border-radius:999px;padding:7px 11px;color:var(--muted);font-size:11px;letter-spacing:.07em;display:flex;align-items:center;gap:8px}.dot{width:7px;height:7px;border-radius:50%;display:inline-block;background:var(--yellow);box-shadow:0 0 10px currentColor}.dot.connected{background:var(--green)}.hero{padding:40px 0 24px;display:grid;grid-template-columns:1.2fr .8fr;align-items:end;gap:24px}.eyebrow{color:var(--teal);font-size:11px;letter-spacing:.2em;font-weight:800;margin-bottom:13px}.hero h1{font-size:clamp(29px,4vw,48px);line-height:1.07;letter-spacing:-.04em;margin:0 0 14px;max-width:720px}.hero h1 em{font-style:normal;color:var(--teal)}.hero p{color:var(--muted);max-width:630px;margin:0}.devicebox{border:1px solid var(--line);background:linear-gradient(145deg,#102631,#0a1b23);padding:20px;border-radius:16px;box-shadow:var(--shadow)}.tiny-label{font-size:10px;letter-spacing:.17em;color:var(--teal);font-weight:800;margin-bottom:10px}.devicebox h2{font-size:16px;margin:0 0 7px}.devicebox p{font-size:12px;margin:0 0 16px;color:var(--muted)}.btnrow{display:flex;gap:9px;flex-wrap:wrap}.btn{border:1px solid transparent;padding:11px 14px;border-radius:8px;font-weight:750;font-size:12px;display:inline-flex;align-items:center;justify-content:center;gap:8px;transition:.15s}.primary{background:var(--teal2);color:#032326}.primary:hover{background:var(--teal)}.secondary{background:#18313b;border-color:#294852;color:var(--text)}.secondary:hover{border-color:#4f9e9a}.ghost{background:transparent;border-color:#294852;color:var(--muted)}.btn:disabled{opacity:.45;cursor:not-allowed}.safetyline{border-top:1px solid var(--line);margin-top:17px;padding-top:13px;display:flex;align-items:center;gap:9px;color:var(--yellow);font-size:11px}.safetyline.ok{color:var(--green)}.dashboard{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin:7px 0 14px}.card{background:linear-gradient(145deg,#0c2029,#091a21);border:1px solid var(--line);border-radius:14px;padding:18px;min-width:0}.cardhead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:16px}.cardtitle{font-size:11px;letter-spacing:.15em;font-weight:800;color:#a9c2c8}.tag{font-size:10px;border:1px solid var(--line);color:var(--muted);border-radius:5px;padding:4px 7px}.distancevalue{font-size:54px;font-weight:800;letter-spacing:-.055em;line-height:1.1}.distancevalue small{font-size:15px;font-weight:600;color:var(--muted);letter-spacing:0}.bar{height:7px;background:#203d46;border-radius:8px;margin:17px 0 10px;overflow:hidden}.barfill{height:100%;width:55%;background:var(--teal);border-radius:8px;transition:width .25s,background .25s}.between{display:flex;justify-content:space-between;font-size:10px;color:var(--muted)}.stateicon{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;background:#10362e;color:var(--green);margin-bottom:14px}.stateicon svg{width:25px;height:25px}.statebig{font-size:23px;font-weight:800;margin-bottom:4px}.statetext{font-size:12px;color:var(--muted);min-height:36px}.state-safe .stateicon{background:#10362e;color:var(--green)}.state-warning .stateicon{background:#3a2f1c;color:var(--yellow)}.state-danger .stateicon{background:#3b2027;color:var(--red)}.state-warning .statebig{color:var(--yellow)}.state-danger .statebig{color:var(--red)}.readinglist{display:flex;flex-direction:column;gap:9px}.reading{display:flex;align-items:center;gap:10px;font-size:12px}.reading .mini{width:7px;height:7px;border-radius:50%;background:var(--teal)}.reading .rlabel{color:var(--muted);flex:1}.reading strong{font-variant-numeric:tabular-nums}.lower{display:grid;grid-template-columns:1.15fr .85fr;gap:14px;margin-bottom:36px}.rangebox{padding:16px;background:#08171e;border:1px solid #1b3942;border-radius:10px;margin-bottom:16px}.rangehead{display:flex;justify-content:space-between;align-items:center;font-size:12px;margin-bottom:10px}.rangehead strong{color:var(--teal);font-size:16px}.rangebox input{width:100%;accent-color:var(--teal);cursor:pointer}.rangeends{display:flex;justify-content:space-between;font-size:10px;color:var(--muted)}.checkline{display:flex;align-items:flex-start;gap:9px;color:var(--muted);font-size:12px;margin:10px 0 16px}.checkline input{accent-color:var(--teal);margin-top:3px}.audio-list{display:grid;gap:10px}.audioitem{display:flex;align-items:center;gap:11px;border:1px solid var(--line);border-radius:10px;padding:11px;background:#091a21}.audio-symbol{height:36px;width:36px;border-radius:9px;display:grid;place-items:center;background:#13313a;color:var(--teal);font-size:16px;flex-shrink:0}.audio-copy{min-width:0;flex:1}.audio-copy strong{display:block;font-size:12px}.audio-copy small{display:block;color:var(--muted);font-size:11px;margin-top:2px}.play{width:35px;height:35px;border:1px solid #2b535c;border-radius:50%;background:#14343c;color:var(--teal);display:grid;place-items:center;flex-shrink:0}.play:hover{background:#20515a}.logtable{width:100%;border-collapse:collapse;font-size:11px}.logtable th{text-align:left;color:var(--muted);font-weight:600;padding:9px 6px;border-bottom:1px solid var(--line)}.logtable td{padding:10px 6px;border-bottom:1px solid #16313a}.logtable tr:last-child td{border-bottom:0}.zone{font-size:10px;border-radius:5px;padding:3px 6px;display:inline-block}.z-safe{color:var(--green);background:#10342a}.z-warning{color:var(--yellow);background:#382e1a}.z-danger{color:var(--red);background:#3c2028}.foot{color:#64828b;font-size:10px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:0 0 22px}.notice{display:none;margin:0 0 16px;border:1px solid #7f6230;background:#302919;color:#ffe1a2;border-radius:9px;padding:12px;font-size:12px}.notice.show{display:block}.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%) translateY(30px);background:#e1fff9;color:#032326;padding:12px 17px;border-radius:9px;font-size:12px;font-weight:800;box-shadow:var(--shadow);opacity:0;pointer-events:none;transition:.2s;z-index:10;max-width:calc(100% - 30px)}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+@media(max-width:900px){.hero{grid-template-columns:1fr}.dashboard{grid-template-columns:1fr 1fr}.dashboard .card:last-child{grid-column:1/-1}.lower{grid-template-columns:1fr}}@media(max-width:560px){.wrap{width:min(100% - 22px,1220px)}.top{height:auto;padding:14px 0;align-items:flex-start}.topright{align-items:flex-end}.pill{font-size:9px}.hero{padding-top:28px}.dashboard{grid-template-columns:1fr}.dashboard .card:last-child{grid-column:auto}.distancevalue{font-size:48px}.card{padding:15px}.btn{flex:1}.hero h1{font-size:34px}}
+</style>
+</head>
+<body>
+<header class="top wrap">
+  <div class="brand">
+    <div class="brandmark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2v20m0-20 7 6-7 6m0-12-7 6 7 6m0 0 7 6-7 6m0-12-7 6 7 6" stroke-linejoin="round"/></svg></div>
+    <div><div class="brandname">SMART <span>CANE</span></div><div class="subbrand">ASSISTIVE NAVIGATION SYSTEM</div></div>
+  </div>
+  <div class="topright"><div class="pill"><i id="bleDot" class="dot"></i><span id="bleLabel">BLUETOOTH NOT CONNECTED</span></div><div class="pill">DASHBOARD&nbsp; / &nbsp;V1.0</div></div>
+</header>
+<main class="wrap">
+  <section class="hero">
+    <div><div class="eyebrow">// LIVE SENSOR MONITOR</div><h1>Move with more<br><em>confidence.</em></h1><p>Monitor obstacle distance, hear spoken warnings, and review sensor readings from one simple dashboard. Demo readings are available without hardware.</p></div>
+    <div class="devicebox">
+      <div class="tiny-label">// LINK CONTROL</div><h2>Smart Cane / HC-05</h2><p>Pair HC-05 in Windows and create its outgoing Bluetooth COM port, then choose that COM port here.</p>
+      <div class="btnrow"><button id="connectBtn" class="btn primary"><span>↗</span> Connect Bluetooth</button><button id="disconnectBtn" class="btn secondary" disabled>Disconnect</button></div>
+      <div id="linkStatus" class="safetyline"><i id="safeDot" class="dot"></i><span id="linkMessage">Demo mode active — hardware not connected.</span></div>
+    </div>
+  </section>
+  <div id="notice" class="notice" role="status"></div>
+  <section class="dashboard">
+    <div class="card"><div class="cardhead"><div class="cardtitle">DISTANCE READING</div><span class="tag" id="sourceTag">SIMULATED</span></div><div class="distancevalue"><span id="distanceNum">85</span> <small>cm</small></div><div class="bar"><div id="distanceBar" class="barfill"></div></div><div class="between"><span>0 cm · VERY CLOSE</span><span>200 cm · CLEAR</span></div></div>
+    <div id="stateCard" class="card state-warning"><div class="cardhead"><div class="cardtitle">OBSTACLE STATUS</div><span class="tag" id="zoneTag">ZONE 02</span></div><div class="stateicon" id="stateIcon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 2.8 20h18.4L12 3Z"/><path d="M12 9v5m0 3h.01"/></svg></div><div class="statebig" id="stateTitle">CAUTION</div><div class="statetext" id="stateText" lang="ar" dir="rtl">يوجد عائق أمامك. تحرك بحذر.</div></div>
+    <div class="card"><div class="cardhead"><div class="cardtitle">SYSTEM STATUS</div><span class="tag">STATUS</span></div><div class="readinglist"><div class="reading"><i class="mini"></i><span class="rlabel">Distance sensor</span><strong id="sensorStatus">DEMO</strong></div><div class="reading"><i class="mini" style="background:var(--yellow)"></i><span class="rlabel">Audio alerts</span><strong id="audioStatus">READY</strong></div><div class="reading"><i class="mini" style="background:#6eb6ff"></i><span class="rlabel">Bluetooth link</span><strong id="systemBle">OFFLINE</strong></div><div class="reading"><i class="mini" style="background:var(--green)"></i><span class="rlabel">Last update</span><strong id="lastUpdate">--:--:--</strong></div></div></div>
+  </section>
+  <section class="lower">
+    <div class="card"><div class="cardhead"><div class="cardtitle">DEMO CONTROLS &amp; TELEMETRY</div><span class="tag">INTERACTIVE</span></div>
+      <div class="rangebox"><div class="rangehead"><label for="distanceSlider">Set simulated distance</label><strong><span id="sliderNum">85</span> cm</strong></div><input id="distanceSlider" type="range" min="5" max="200" value="85" step="1" /><div class="rangeends"><span>5 cm · danger</span><span>200 cm · safe</span></div></div>
+      <label class="checkline"><input type="checkbox" id="autoSpeak" checked /><span>Speak the fixed warning message when the distance enters a different zone.</span></label>
+      <div class="btnrow"><button id="runDemo" class="btn primary">▶ Start demo cycle</button><button id="testCurrent" class="btn secondary">♫ Play current alert</button><button id="clearLog" class="btn ghost">Clear log</button></div>
+      <p style="font-size:11px;color:var(--muted);margin:13px 0 0">The demo cycles through safe, caution and close-obstacle readings. Real readings replace these when the HC-05 COM port is connected and the Arduino sends distance lines.</p>
+    </div>
+    <div class="card"><div class="cardhead"><div class="cardtitle">FIXED VOICE MESSAGES</div><span class="tag">3 ALERTS</span></div>
+      <div class="audio-list">
+        <div class="audioitem"><div class="audio-symbol">♫</div><div class="audio-copy"><strong>01 — Safe path</strong><small lang="ar" dir="rtl">المسار أمامك آمن.</small></div><button class="play" data-zone="safe" title="Play safe message">▶</button></div>
+        <div class="audioitem"><div class="audio-symbol" style="color:var(--yellow);background:#382f1c">♫</div><div class="audio-copy"><strong>02 — Obstacle ahead</strong><small lang="ar" dir="rtl">يوجد عائق أمامك، تحرك بحذر.</small></div><button class="play" data-zone="warning" title="Play caution message">▶</button></div>
+        <div class="audioitem"><div class="audio-symbol" style="color:var(--red);background:#3c2028">♫</div><div class="audio-copy"><strong>03 — Very close</strong><small lang="ar" dir="rtl">احذر، العائق قريب جدًا منك.</small></div><button class="play" data-zone="danger" title="Play danger message">▶</button></div>
+      </div>
+      <p style="font-size:10px;color:var(--muted);margin:13px 0 0">Each warning has its own alert tone followed by Arabic speech from your browser. Spoken voice availability depends on Arabic voices installed on your computer.</p>
+    </div>
+  </section>
+  <section class="card" style="margin-bottom:22px"><div class="cardhead"><div class="cardtitle">RECENT READINGS</div><span class="tag" id="logCount">0 EVENTS</span></div><div style="overflow-x:auto"><table class="logtable"><thead><tr><th>TIME</th><th>DISTANCE</th><th>ZONE</th><th>INPUT</th></tr></thead><tbody id="logRows"><tr><td colspan="4" style="color:var(--muted);text-align:center;padding:22px">No readings yet.</td></tr></tbody></table></div></section>
+  <footer class="foot"><span>SMART CANE · DEMONSTRATION DASHBOARD</span><span>For project demonstration only — not a certified mobility safety device.</span></footer>
+</main><div id="toast" class="toast" role="status"></div>
+<script>
+(()=>{
+  'use strict';
+  // HC-05 uses Bluetooth Classic SPP. On desktop Chrome/Edge, access its paired COM port with Web Serial.
+  const BAUD_RATE = 9600;
+  const MESSAGES = {
+    safe:    'المسار أمامك آمن.',
+    warning: 'يوجد عائق أمامك، تحرك بحذر.',
+    danger:  'احذر، العائق قريب جدًا منك.'
+  };
+  const $ = id => document.getElementById(id);
+  const ui = {
+    distanceNum:$('distanceNum'), sliderNum:$('sliderNum'), slider:$('distanceSlider'), bar:$('distanceBar'), source:$('sourceTag'),
+    stateCard:$('stateCard'), zoneTag:$('zoneTag'), stateTitle:$('stateTitle'), stateText:$('stateText'), stateIcon:$('stateIcon'),
+    sensor:$('sensorStatus'), audio:$('audioStatus'), ble:$('systemBle'), last:$('lastUpdate'), rows:$('logRows'), count:$('logCount'),
+    connect:$('connectBtn'), disconnect:$('disconnectBtn'), bleDot:$('bleDot'), bleLabel:$('bleLabel'), linkMessage:$('linkMessage'), safeDot:$('safeDot'),
+    notice:$('notice'), toast:$('toast'), autoSpeak:$('autoSpeak'), runDemo:$('runDemo'), testCurrent:$('testCurrent')
+  };
+  let currentDistance = 85, currentZone = 'warning', serialPort = null, serialReader = null, keepReading = false, demoTimer = null, logs = [], lastSpokenZone = null, toastTimer = null;
+  const zoneData = {
+    safe:{label:'SAFE PATH',zone:'ZONE 01',text:'المسار أمامك آمن.',cls:'state-safe',badge:'z-safe',color:'var(--green)'},
+    warning:{label:'CAUTION',zone:'ZONE 02',text:'يوجد عائق أمامك. تحرك بحذر.',cls:'state-warning',badge:'z-warning',color:'var(--yellow)'},
+    danger:{label:'DANGER — CLOSE',zone:'ZONE 03',text:'احذر، العائق قريب جدًا منك.',cls:'state-danger',badge:'z-danger',color:'var(--red)'}
+  };
+  function zoneFor(cm){ return cm > 100 ? 'safe' : cm > 50 ? 'warning' : 'danger'; }
+  function timeNow(){ return new Date().toLocaleTimeString([], {hour12:false}); }
+  function showToast(msg){ ui.toast.textContent=msg; ui.toast.classList.add('show'); clearTimeout(toastTimer); toastTimer=setTimeout(()=>ui.toast.classList.remove('show'),3200); }
+  // Audio alerts are generated locally by the browser: distinct warning tones plus Arabic speech.
+  // The speech uses an Arabic voice installed in Chrome/Edge/Windows when one is available.
+  let alertAudioContext = null;
+  let speechTimer = null;
+  let cachedVoices = [];
+  function refreshVoices(){
+    if ('speechSynthesis' in window) cachedVoices = speechSynthesis.getVoices() || [];
+  }
+  if ('speechSynthesis' in window) {
+    refreshVoices();
+    speechSynthesis.addEventListener?.('voiceschanged', refreshVoices);
+  }
+  function unlockAudio(){
+    try {
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      if (!AudioCtx) return;
+      if (!alertAudioContext) alertAudioContext = new AudioCtx();
+      if (alertAudioContext.state === 'suspended') alertAudioContext.resume().catch(()=>{});
+    } catch (_) {}
+  }
+  function playAlertTone(zone){
+    try {
+      unlockAudio();
+      if (!alertAudioContext) return 0;
+      const patterns = {
+        safe:    [{f:880,t:0,d:0.13}],
+        warning: [{f:660,t:0,d:0.14},{f:660,t:0.22,d:0.14}],
+        danger:  [{f:740,t:0,d:0.12},{f:590,t:0.17,d:0.12},{f:440,t:0.34,d:0.2}]
+      };
+      const ctx = alertAudioContext;
+      const now = ctx.currentTime;
+      const notes = patterns[zone] || patterns.warning;
+      for (const note of notes) {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(note.f, now + note.t);
+        gain.gain.setValueAtTime(0.0001, now + note.t);
+        gain.gain.exponentialRampToValueAtTime(0.13, now + note.t + 0.012);
+        gain.gain.setValueAtTime(0.13, now + note.t + Math.max(0.025, note.d - 0.025));
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + note.t + note.d);
+        osc.connect(gain); gain.connect(ctx.destination);
+        osc.start(now + note.t); osc.stop(now + note.t + note.d + 0.015);
+      }
+      return Math.max(...notes.map(n=>n.t+n.d));
+    } catch (_) { return 0; }
+  }
+  function speak(zone){
+    // Always play a clear tone pattern, even on machines without an Arabic speech voice.
+    if (speechTimer) clearTimeout(speechTimer);
+    if ('speechSynthesis' in window) speechSynthesis.cancel();
+    const toneDuration = playAlertTone(zone);
+    if (!( 'speechSynthesis' in window) || !( 'SpeechSynthesisUtterance' in window)) {
+      ui.audio.textContent = 'TONE ONLY';
+      showNotice('Voice synthesis is unavailable in this browser; the alert tone still plays. Try desktop Chrome or Edge.');
+      return;
+    }
+    speechTimer = setTimeout(() => {
+      try {
+        refreshVoices();
+        const u = new SpeechSynthesisUtterance(MESSAGES[zone]);
+        u.lang = 'ar-EG'; u.rate = 0.88; u.pitch = 1; u.volume = 1;
+        const voices = cachedVoices.length ? cachedVoices : speechSynthesis.getVoices();
+        const arabic = voices.find(v => /^ar[-_]EG$/i.test(v.lang)) || voices.find(v => /^ar([_-]|$)/i.test(v.lang));
+        if (arabic) u.voice = arabic;
+        u.onstart = () => { ui.audio.textContent = 'PLAYING VOICE'; };
+        u.onend = () => { ui.audio.textContent = 'READY'; };
+        u.onerror = () => { ui.audio.textContent = 'TONE PLAYED'; };
+        speechSynthesis.speak(u);
+      } catch(e) {
+        ui.audio.textContent = 'TONE PLAYED';
+        showNotice('The warning tone played, but the spoken alert failed: ' + e.message);
+      }
+    }, Math.round(toneDuration * 1000) + 90);
+  }
+  function showNotice(text){ui.notice.textContent=text;ui.notice.classList.add('show');}
+  function hideNotice(){ui.notice.classList.remove('show');ui.notice.textContent='';}
+  function addLog(cm,zone,source){
+    logs.unshift({time:timeNow(),cm:Math.round(cm*10)/10,zone,source}); logs=logs.slice(0,12);
+    ui.count.textContent=logs.length+' EVENTS';
+    if(!logs.length){ui.rows.innerHTML='<tr><td colspan="4" style="color:var(--muted);text-align:center;padding:22px">No readings yet.</td></tr>';return;}
+    ui.rows.innerHTML=logs.map(x=>`<tr><td>${x.time}</td><td><strong>${x.cm} cm</strong></td><td><span class="zone ${zoneData[x.zone].badge}">${zoneData[x.zone].label}</span></td><td>${x.source}</td></tr>`).join('');
+  }
+  function updateDistance(cm,source='DEMO',allowSpeak=true){
+    cm=Math.max(0,Math.min(400,Number(cm))); if(!Number.isFinite(cm)) return;
+    currentDistance=cm; const z=zoneFor(cm), changed=z!==currentZone; currentZone=z;
+    ui.distanceNum.textContent=Number.isInteger(cm)?cm:cm.toFixed(1); ui.sliderNum.textContent=ui.distanceNum.textContent;
+    if(source==='DEMO') ui.slider.value=Math.min(200,Math.max(5,cm));
+    ui.source.textContent=source; ui.sensor.textContent=source==='LIVE'?'LIVE':'DEMO'; ui.last.textContent=timeNow();
+    ui.bar.style.width=(Math.max(0,Math.min(200,cm))/200*100)+'%'; ui.bar.style.background=zoneData[z].color;
+    ui.stateCard.className='card '+zoneData[z].cls; ui.zoneTag.textContent=zoneData[z].zone; ui.stateTitle.textContent=zoneData[z].label; ui.stateText.textContent=zoneData[z].text;
+    ui.stateIcon.style.color=zoneData[z].color; ui.stateIcon.innerHTML=z==='safe'?'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 4 4L19 6"/></svg>':'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 2.8 20h18.4L12 3Z"/><path d="M12 9v5m0 3h.01"/></svg>';
+    addLog(cm,z,source);
+    if(allowSpeak && ui.autoSpeak.checked && (changed || lastSpokenZone===null)){ speak(z); lastSpokenZone=z; }
+  }
+  ui.slider.addEventListener('input',()=>{stopDemo(); updateDistance(Number(ui.slider.value),'DEMO',true);});
+  ui.testCurrent.addEventListener('click',()=>{speak(currentZone);lastSpokenZone=currentZone;});
+  document.querySelectorAll('[data-zone]').forEach(b=>b.addEventListener('click',()=>{speak(b.dataset.zone);lastSpokenZone=b.dataset.zone;}));
+  $('clearLog').addEventListener('click',()=>{logs=[];ui.rows.innerHTML='<tr><td colspan="4" style="color:var(--muted);text-align:center;padding:22px">No readings yet.</td></tr>';ui.count.textContent='0 EVENTS';showToast('Reading log cleared');});
+  const demoDistances=[160,128,92,72,48,32,18,42,80,115]; let demoIndex=0;
+  function stopDemo(){if(demoTimer){clearInterval(demoTimer);demoTimer=null;}ui.runDemo.textContent='▶ Start demo cycle';}
+  ui.runDemo.addEventListener('click',()=>{if(demoTimer){stopDemo();return;} if(serialPort){showToast('Disconnect the HC-05 to run the demo cycle.');return;}demoIndex=0;ui.runDemo.textContent='Ⅱ Stop demo cycle';demoTimer=setInterval(()=>{updateDistance(demoDistances[demoIndex%demoDistances.length],'DEMO',true);demoIndex++;},2600);updateDistance(demoDistances[demoIndex++],'DEMO',true);});
+  function setConnected(name){ui.bleDot.classList.add('connected');ui.bleLabel.textContent='BLUETOOTH CONNECTED';ui.ble.textContent='CONNECTED';ui.connect.disabled=true;ui.disconnect.disabled=false;ui.linkMessage.textContent='Connected to '+name+' — waiting for distance data.';ui.safeDot.classList.add('connected');$('linkStatus').classList.add('ok');ui.source.textContent='SERIAL';ui.sensor.textContent='WAITING';hideNotice();}
+  function setDisconnected(message='Demo mode active — hardware not connected.'){ui.bleDot.classList.remove('connected');ui.bleLabel.textContent='BLUETOOTH NOT CONNECTED';ui.ble.textContent='OFFLINE';ui.connect.disabled=false;ui.disconnect.disabled=true;ui.linkMessage.textContent=message;ui.safeDot.classList.remove('connected');$('linkStatus').classList.remove('ok');ui.source.textContent='SIMULATED';ui.sensor.textContent='DEMO';}
+  function parseMessage(raw){
+    let s=String(raw).trim(); if(!s) return;
+    // Supports lines like "Distance: 42 cm", plain numbers, or JSON such as {"distance":42}.
+    let m=s.match(/\"?distance\"?\s*[:=]\s*(-?\d+(?:\.\d+)?)/i);
+    if(!m) m=s.match(/(-?\d+(?:\.\d+)?)\s*cm\b/i);
+    if(!m && /^-?\d+(?:\.\d+)?$/.test(s)) m=[s,s];
+    if(m){const d=Number(m[1]);if(d>=0&&d<=400){stopDemo();updateDistance(d,'LIVE',true);ui.linkMessage.textContent='Receiving distance data from HC-05.';}}
+  }
+  async function connectSerial(){
+    unlockAudio();
+    hideNotice();
+    if(!window.isSecureContext){
+      showNotice('Web Serial needs HTTPS. Open https://smartcane12.vercel.app in desktop Chrome or Edge.');
+      return;
+    }
+    if(!('serial' in navigator)){
+      showNotice('Web Serial is not supported in this browser. Use the latest desktop Google Chrome or Microsoft Edge on Windows.');
+      return;
+    }
+    if(serialPort){
+      showToast('A serial connection is already active.');
+      return;
+    }
+
+    let opened = false;
+    const decoder = new TextDecoder();
+    let buffer = '';
+    try{
+      // The picker must be opened directly from this button click.
+      serialPort = await navigator.serial.requestPort();
+      await serialPort.open({ baudRate: BAUD_RATE });
+      opened = true;
+      keepReading = true;
+      stopDemo();
+      setConnected('HC-05 COM port');
+      showToast('COM port opened at ' + BAUD_RATE + ' baud');
+
+      // Read directly from the serial port; this avoids a separate pipe lock.
+      serialReader = serialPort.readable.getReader();
+      while(keepReading){
+        const { value, done } = await serialReader.read();
+        if(done) break;
+        buffer += decoder.decode(value, { stream: true });
+        const lines = buffer.split(/\r?\n/);
+        buffer = lines.pop() || '';
+        for(const line of lines){
+          if(line.trim()) parseMessage(line);
+        }
+        // Support modules/sketches that send data without a newline.
+        if(buffer.length > 120){
+          parseMessage(buffer);
+          buffer = '';
+        }
+      }
+      if(buffer.trim()) parseMessage(buffer);
+    }catch(e){
+      const name = e && e.name ? e.name : '';
+      if(name === 'NotFoundError'){
+        showNotice('No port selected. Pair HC-05 in Windows first, create/select its OUTGOING Bluetooth COM port, then press Connect again.');
+      }else if(name === 'SecurityError'){
+        showNotice('The browser blocked serial access. Open the HTTPS site in desktop Chrome/Edge and click Connect directly.');
+      }else if(name === 'InvalidStateError'){
+        showNotice('This COM port is already open in another app. Close Arduino Serial Monitor, Serial Plotter, and any terminal, then retry.');
+      }else if(name === 'NetworkError' || /open|busy|access|denied|device/i.test((e && e.message) || '')){
+        showNotice('Could not open this COM port. Check that it is the HC-05 outgoing Bluetooth COM port and close any app using it. Details: ' + ((e && e.message) || name));
+      }else{
+        showNotice('Connection failed: ' + ((e && e.message) || String(e)));
+      }
+    }finally{
+      keepReading = false;
+      if(serialReader){
+        try{ await serialReader.cancel(); }catch(e){}
+        try{ serialReader.releaseLock(); }catch(e){}
+        serialReader = null;
+      }
+      if(serialPort){
+        const portToClose = serialPort;
+        serialPort = null;
+        if(opened){ try{ await portToClose.close(); }catch(e){} }
+      }
+      setDisconnected('Disconnected — demo mode is available.');
+    }
+  }
+
+  ui.connect.addEventListener('click', connectSerial);
+  ui.disconnect.addEventListener('click', async()=>{
+    keepReading = false;
+    if(serialReader){
+      try{ await serialReader.cancel(); }catch(e){}
+    }else if(serialPort){
+      try{ await serialPort.close(); }catch(e){}
+      serialPort = null;
+      setDisconnected('Disconnected — demo mode is available.');
+    }
+    showToast('Disconnecting from HC-05…');
+  });
+  window.addEventListener('beforeunload',()=>{
+    stopDemo();
+    keepReading = false;
+    if(serialReader){ try{ serialReader.cancel(); }catch(e){} }
+  });
+  // Initialise the page with a representative reading; no audio plays until the user interacts.
+  updateDistance(85,'DEMO',false); currentZone='warning';lastSpokenZone='warning';
+})();
+</script>
+</body>
+</html>
